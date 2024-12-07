@@ -143,3 +143,4 @@ Pipfile
 .vscode
 .DS_Store
 essays.csv
+merged_essays.md
