@@ -144,3 +144,4 @@ Pipfile
 .DS_Store
 essays.csv
 merged_essays.md
+merged_essays.txt
