@@ -8,6 +8,7 @@ from htmldate import find_date
 import csv
 import requests
 from bs4 import BeautifulSoup
+import os
 
 """
 Download a collection of Paul Graham essays in EPUB & Markdown.
@@ -25,6 +26,9 @@ FILE = "./essays.csv"
 
 if os.path.isfile(FILE):
     os.remove(FILE)
+
+if not os.path.exists("./essays"):
+    os.makedirs("./essays")
 
 
 def parse_main_page(base_url: str, articles_url: str):
@@ -58,7 +62,7 @@ toc = list(reversed(parse_main_page("https://paulgraham.com/", "articles.html"))
 
 
 def update_links_in_md(joined):
-    matches = re.findall(b"\[\d+\]", joined)
+    matches = re.findall(rb"\[\d+\]", joined)
 
     if not matches:
         return joined
@@ -76,7 +80,7 @@ def update_links_in_md(joined):
         counter = [0]
 
         note_number = int(match.decode().strip("[]"))
-        match_regex = match.replace(b"[", b"\[").replace(b"]", b"\]")
+        match_regex = match.replace(b"[", rb"\[").replace(b"]", rb"\]")
 
         joined = re.sub(match_regex, update_links, joined)
 
